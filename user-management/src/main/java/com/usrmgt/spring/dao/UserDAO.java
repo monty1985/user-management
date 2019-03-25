@@ -45,7 +45,7 @@ public class UserDAO {
 			conn = null; // prevent any future access
 		}
 	
-		userReply.setStatus(firstName+ "  "+lastName+ " registered successfully to the users table");
+		userReply.setStatus(firstName+ "  "+lastName+ " is registered successfully to the users table");
 		userReply.setUserID(userid);
 		
 		return userReply;

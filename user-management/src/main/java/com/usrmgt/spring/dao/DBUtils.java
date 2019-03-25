@@ -1,4 +1,4 @@
-package com.usrmgt.sprint.dao;
+package com.usrmgt.spring.dao;
 
 
 import java.sql.Connection;

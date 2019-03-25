@@ -20,9 +20,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.usrmgt.spring.dao.DBUtils;
+import com.usrmgt.spring.dao.UserDAO;
 import com.usrmgt.spring.dto.User;
-import com.usrmgt.sprint.dao.DBUtils;
-import com.usrmgt.sprint.dao.UserDAO;
 
 @Controller
 public class UserController {

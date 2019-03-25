@@ -17,15 +17,12 @@ public class DBUtils {
 		return dataResourceName;
 	}
 
-	public static Connection getConnection() throws NamingException, SQLException{
+	public static Connection getConnection() throws SQLException, NamingException {
 		Context initialContext = new InitialContext();	
 		Context environmentContext = (Context) initialContext.lookup("java:comp/env");
 		DataSource dataSource = (DataSource) environmentContext.lookup(dataResourceName);
 		return dataSource.getConnection();
 	}
 	
-	public static void closeConnection(Connection con) {
-		
-		
-	}
+
 }

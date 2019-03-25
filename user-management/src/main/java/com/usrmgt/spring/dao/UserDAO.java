@@ -14,7 +14,7 @@ import com.usrmgt.spring.dto.UserResponse;
 @Repository
 public class UserDAO {
 
-	private static final String dbName = "USERmanagerdb";
+	private static final String dbName = "usermanagerdb";
 	private static final String dbtableName = "users";
 	private static final String dbColfirstName = "first_name";
 	private static final String dbColLastNameDB = "last_name";

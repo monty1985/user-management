@@ -1,0 +1,5 @@
+com\usrmgt\spring\dao\UserDAO.class
+com\usrmgt\spring\dto\UserResponse.class
+com\usrmgt\spring\dao\DBUtils.class
+com\usrmgt\spring\dto\User.class
+com\usrmgt\spring\controller\UserController.class

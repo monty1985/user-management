@@ -1,0 +1,6 @@
+<Context>
+    <ResourceLink name="jdbc/usermanagerdb"
+    global="jdbc/usermanagerdb"
+    type="javax.sql.DataSource"
+    />
+</Context>

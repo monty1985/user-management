@@ -2,40 +2,40 @@ package com.usrmgt.spring.dto;
 
 public class User {
 	
-	private String firstname;
-	private String lastname;
-	private String user_id;
+	private String firstName;
+	private String lastName;
+	private String userId;
 	private String email;
 
-	public String getFirstname() {
-		return firstname;
+	public String getfirstName() {
+		return firstName;
 	}
 	
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
+	public void setfirstName(String firstName) {
+		this.firstName = firstName;
 	}
 	
-	public String getLastname() {
-		return lastname;
+	public String getlastName() {
+		return lastName;
 	}
 	
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setlastName(String lastName) {
+		this.lastName = lastName;
 	}
 	
-	public String getuserID() {
-		return user_id;
+	public String getuserId() {
+		return userId;
 	}
 	
-	public void setUserID(String userId) {
-		this.user_id = userId;
+	public void setuserId(String userId) {
+		this.userId = userId;
 	}
 	
-	public String getEmail() {
+	public String getemail() {
 		return email;
 	}
 	
-	public void setEmail(String email) {
+	public void setemail(String email) {
 		this.email = email;
 	}
 }

@@ -23,18 +23,19 @@ public class UserDAO {
 	private static final String dbColAccess = "access";
 
 	public UserResponse registerUser(User user) throws NamingException, SQLException{
+		int impactedRows = 0;	
+		String updateStatus = "fail";
 		UserResponse userReply = new UserResponse();
-		String userid = user.getuserID();
-		String firstName = user.getFirstname();
-		String lastName = user.getLastname();
-		String email = user.getEmail();
+		String userid = user.getuserId();
+		String firstName = user.getfirstName();
+		String lastName = user.getlastName();
+		String email = user.getemail();
 		String accessType = "read";	
 		Connection conn = DBUtils.getConnection();			      
 		try (Statement stm = conn.createStatement()) {
 			String registerUserquery = "INSERT INTO "+dbName+"."+dbtableName+"("+dbColfirstName+", "+dbColLastNameDB+", "+dbColEmailDB+", "+dbColUserID+", "+dbColAccess+") "
-					+ "VALUES ('"+firstName+"','"+lastName+"', '"+email+"','"+userid+"','"+accessType+"');";
-//			ResultSet rs = stm.executeQuery(registerUserquery);	 
-			stm.executeQuery(registerUserquery);
+					+ "VALUES ('"+firstName+"','"+lastName+"', '"+email+"','"+userid+"','"+accessType+"');";			
+			impactedRows = stm.executeUpdate(registerUserquery);
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
 		} finally {
@@ -44,10 +45,11 @@ public class UserDAO {
 			}
 			conn = null; // prevent any future access
 		}
-	
-		userReply.setStatus(firstName+ "  "+lastName+ " is registered successfully to the users table");
-		userReply.setUserID(userid);
-		
+		if( impactedRows > 0 ) {
+			updateStatus = "succesful";		
+		}	
+		userReply.setstatus(firstName+ "  "+lastName+ " registeration status: "+ updateStatus );
+		userReply.setuserid(userid);		
 		return userReply;
 	}
 

@@ -2,22 +2,22 @@ package com.usrmgt.spring.dto;
 
 public class UserResponse {
 	private String status;
-	private String userID;
+	private String userId;
 	
-	public String getStatus() {
+	public String getstatus() {
 	   return status;
 	}
 
-	public void setStatus(String iStatus) {
-		this.status = iStatus;
+	public void setstatus(String status) {
+		this.status = status;
 	}
 	
-	public String getUserID() {
-		return userID;
+	public String getuserId() {
+		return userId;
 	}
 	
-	public void setUserID(String iUser) {
-		this.userID = iUser ;
+	public void setuserid(String userId) {
+		this.userId = userId ;
 	}
 
 }

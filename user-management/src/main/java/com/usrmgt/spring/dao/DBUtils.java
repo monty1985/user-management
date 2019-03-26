@@ -23,6 +23,4 @@ public class DBUtils {
 		DataSource dataSource = (DataSource) environmentContext.lookup(dataResourceName);
 		return dataSource.getConnection();
 	}
-	
-
 }

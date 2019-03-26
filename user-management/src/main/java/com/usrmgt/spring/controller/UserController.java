@@ -29,6 +29,23 @@ public class UserController {
 		
 	@Autowired
 	UserDAO userDao;
+		
+	
+	@RequestMapping(value = "/user/register", method = RequestMethod.POST)
+	@ResponseBody
+	public UserResponse registerUser(@RequestBody User user) throws NamingException, SQLException {
+		UserResponse response = userDao.registerUser(user);
+		return response;	
+	}
+	
+	
+	@RequestMapping(value = "/user/delete", method = RequestMethod.DELETE)
+	@ResponseBody
+	public UserResponse deleteUser(@Validated User user, Model model) throws NamingException, SQLException {
+		UserResponse response = userDao.registerUser(user);
+		return response;
+	}
+	
 	
 	@ResponseBody
 	@RequestMapping(value = "/test/connection", method = RequestMethod.GET)
@@ -62,16 +79,5 @@ public class UserController {
 		return "home";
 	}
 	
-	@ResponseBody
-	@RequestMapping(value = "/user/register", method = RequestMethod.POST)
-	public UserResponse registerUser(@RequestBody User user) throws NamingException, SQLException {
-		UserResponse response = userDao.registerUser(user);
-		return response;	
-	}
 	
-	@RequestMapping(value = "/user/delete", method = RequestMethod.POST)
-	public UserResponse deleteUser(@Validated User user, Model model) throws NamingException, SQLException {
-		UserResponse response = userDao.registerUser(user);
-		return response;
-	}
 }

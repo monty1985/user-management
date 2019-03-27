@@ -1,11 +1,27 @@
 package com.usrmgt.spring.dto;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class User {
-	
+    @Size(max=30)
 	private String firstName;
+    
+    @Size(max=30)
 	private String lastName;
+    
+    @Size(min=5, max=15)
+    @NotEmpty
+    @Pattern(regexp="[A-z0-9_\\.\\-@\\s]+")
 	private String userId;
+	
+	@Email	
 	private String email;
+	
+	
 	private String accessType;
 
 	public String getfirstName() {
@@ -47,4 +63,10 @@ public class User {
 	public void setaccessType(String accessType) {
 		this.accessType = accessType;
 	}
+	
+	@Override
+    public String toString() {
+        return "User [id=" + userId + ", firstName=" + firstName
+                + ", lastName=" + lastName + ", email=" + email + "]";
+    }
 }

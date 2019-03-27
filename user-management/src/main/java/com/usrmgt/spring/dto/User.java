@@ -6,6 +6,7 @@ public class User {
 	private String lastName;
 	private String userId;
 	private String email;
+	private String accessType;
 
 	public String getfirstName() {
 		return firstName;
@@ -37,5 +38,13 @@ public class User {
 	
 	public void setemail(String email) {
 		this.email = email;
+	}
+	
+	public String getaccessType() {
+		return accessType;
+	}
+	
+	public void setaccessType(String accessType) {
+		this.accessType = accessType;
 	}
 }

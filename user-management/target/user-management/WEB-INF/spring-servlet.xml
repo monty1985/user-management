@@ -13,7 +13,9 @@
 	<annotation-driven />	
 	<context:component-scan base-package="com.usrmgt.spring" />
     
+    <!-- 
     <beans:bean id="userValidator" class="com.usrmgt.spring.validator.UsersValidator" />
+    -->
     
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
 		in the /WEB-INF/views directory -->

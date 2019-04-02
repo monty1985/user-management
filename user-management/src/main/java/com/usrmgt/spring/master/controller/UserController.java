@@ -1,32 +1,45 @@
 package com.usrmgt.spring.master.controller;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.NamingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.async.DeferredResult;
 
 import com.usrmgt.spring.master.dao.UserDAO;
-import com.usrmgt.spring.master.dto.User;
-import com.usrmgt.spring.master.dto.UserResponse;
-import com.usrmgt.spring.master.dto.UserWrapper;
+import com.usrmgt.spring.master.domain.AggregateUserResponse;
+import com.usrmgt.spring.master.domain.AtomicRegisterRequest;
+import com.usrmgt.spring.master.domain.Task;
+import com.usrmgt.spring.master.domain.User;
+import com.usrmgt.spring.master.domain.UserRequest;
+import com.usrmgt.spring.master.domain.UserResponse;
+import com.usrmgt.spring.master.service.UserService;
+import com.usrmgt.spring.master.utils.UserUtils;
 
 @RestController
 public class UserController {
 
+	private final UserService service;
+	
 	@Autowired
-	UserDAO userDao;		
-
+	public UserController(final UserService service ) {
+		this.service = service;
+	}
+		
+	@Autowired
+	UserDAO userDao;
+	
 	@RequestMapping(value = "/user/register", method = RequestMethod.POST,consumes="application/json", produces = "application/json" )	
-	public UserResponse registerUser(@RequestBody User user) throws NamingException, SQLException {
-		UserResponse response = userDao.registerUser(user);
-		return response;	
+	public UserResponse registerUser(@RequestBody AtomicRegisterRequest req) throws NamingException, SQLException {
+		UserResponse response = userDao.registerUser(req);
+		return response;
 	}	
 
 	@RequestMapping(value = "/user/delete", method = RequestMethod.DELETE)	
@@ -36,13 +49,12 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/users/register", method = RequestMethod.POST,consumes="application/json", produces = "application/json" )	
-	public List<String> registerUsers(@RequestBody UserWrapper usersWrapper) {
-		List<String> response = new ArrayList<String>();
-		for (User user: usersWrapper.getUsers()){      
-			response.add("Saved users: " + user.toString());
-		}
-		return response;
-				
+	public DeferredResult<ResponseEntity<AggregateUserResponse>> registerUsers(@RequestBody UserRequest request) {
+		DeferredResult<ResponseEntity<AggregateUserResponse>> result = new DeferredResult<>();
+		List<AtomicRegisterRequest> requestList = UserUtils.getDeSerializedUserRegisterRequest(request);
+		Task task = new Task(result, requestList);	
+		service.executeRegister(task);
+		return result;				
 		
 		/*
 		 * Receive the Jason AArray, JASON Array consists of list of users and each user with the list of access rights
@@ -70,4 +82,5 @@ public class UserController {
 		 */
 		
 	}
+		
 }

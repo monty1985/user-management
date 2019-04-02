@@ -8,6 +8,6 @@ public class CONSTANTS {
 	public static final String dbColLastNameDB = "last_name";
 	public static final String dbColEmailDB = "email_id";
 	public static final String dbColUserID = "userid";
-	public static final String dbColAccess = "access";
-
+	public static final String dbColAccess3 = "R3";
+	public static final String dbColAccess4 = "R4";
 }

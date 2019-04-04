@@ -32,8 +32,6 @@ public class ManageHost {
 		return host;
 	}
 
-
-
 	public String getPort() {
 		String port = "8080";
 		switch (accessRights) {
@@ -51,25 +49,6 @@ public class ManageHost {
 			port = "8080";
 		}
 		return port;
-	}
-
-	public String getWebservicePath() {		
-		String webServicePath = "/user/register";
-		switch (accessRights) {
-		case "R1":
-			webServicePath = "/user/register";
-		case "R2":
-			webServicePath = "/user/register";
-		case "R3":
-			webServicePath = "/user/register";
-		case "R4":
-			webServicePath = "/user/register";
-		case "R5":
-			webServicePath = "/user/register";
-		case "R6":
-			webServicePath = "/user/register";
-		}
-		return webServicePath;
 	}
 
 	public String getContextPath() {

@@ -2,7 +2,7 @@ package com.usrmgt.spring.master.domain;
 
 import java.util.List;
 
-public class UserRequest {
+public class UserRequests {
 	
 	private List<User> users;
 	

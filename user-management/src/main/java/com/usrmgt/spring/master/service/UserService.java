@@ -4,7 +4,9 @@ import java.io.IOException;
 
 import org.springframework.stereotype.Service;
 
+import com.usrmgt.spring.master.domain.AtomicDeleteRequest;
 import com.usrmgt.spring.master.domain.AtomicRegisterRequest;
+import com.usrmgt.spring.master.domain.DeleteTask;
 import com.usrmgt.spring.master.domain.Task;
 import com.usrmgt.spring.master.utils.ServiceUtils;
 
@@ -26,19 +28,45 @@ public class UserService {
             final int index = i;
             final long time = System.currentTimeMillis();            
             AtomicRegisterRequest atomicReq = task.getRequests().get(i);            
-            Request req = new ServiceUtils(atomicReq).buildRequestForRegisterUser();            
+            Request req = ServiceUtils.buildRequestForRegisterUser(atomicReq); 
+            
 //            logger.info("Sending request for the atomicReq userid: ["+ atomicReq.getuserId() +"] Access: [" + atomicReq.getaccess());
             client.newCall(req).enqueue(new Callback() {            
                 @Override
                 public void onFailure(Call request, IOException e) {
-                    task.fail(index, time, e);
+                    task.fail(index, time, req.url().toString(), e);
                 }
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    task.success(index, time, response);
+                    task.success(index, time, req.url().toString(), response);
                 }
             });
         }
     }	
+    
+    
+    public void executeDelete(final DeleteTask delTask) {        
+    	delTask.start();
+        for(int i = 0; i < delTask.getRequests().size(); i++) {
+            final int index = i;
+            final long time = System.currentTimeMillis();            
+            AtomicDeleteRequest atomicDelReq = delTask.getRequests().get(i);            
+            Request req = ServiceUtils.buildRequestForDeleteUser(atomicDelReq);            
+//            logger.info("Sending request for the atomicReq userid: ["+ atomicReq.getuserId() +"] Access: [" + atomicReq.getaccess());
+            client.newCall(req).enqueue(new Callback() {            
+            	@Override
+                public void onFailure(Call request, IOException e) {
+            		delTask.fail(index, time, req.url().toString(), e);
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                	delTask.success(index, time, req.url().toString(), response);
+                }
+            });
+        }
+    }	
+    
+    
 }

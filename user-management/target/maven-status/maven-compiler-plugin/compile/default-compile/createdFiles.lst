@@ -8,9 +8,7 @@ com\usrmgt\spring\master\controller\UserController.class
 com\usrmgt\spring\master\dao\UserDAO.class
 com\usrmgt\spring\master\service\UserService$1.class
 com\usrmgt\spring\master\domain\Task.class
-com\usrmgt\spring\master\utils\RequestContainer.class
 com\usrmgt\spring\master\utils\UserUtils.class
 com\usrmgt\spring\master\dao\DBUtils.class
-com\usrmgt\spring\master\domain\UserRequest.class
 com\usrmgt\spring\master\utils\ServiceUtils.class
 com\usrmgt\spring\master\domain\AtomicRegisterRequest.class

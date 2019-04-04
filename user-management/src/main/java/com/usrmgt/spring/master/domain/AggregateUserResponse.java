@@ -4,10 +4,10 @@ import java.util.List;
 
 public class AggregateUserResponse {
 	
-	private List<UserResponse> responses;
+	private List<HTTPResponseCollector> responses;
     private int duration;
     
-    public AggregateUserResponse(List<UserResponse> responses, int duration) {
+    public AggregateUserResponse(List<HTTPResponseCollector> responses, int duration) {
     	this.responses = responses;
     	this.duration = duration;
     }
@@ -16,11 +16,11 @@ public class AggregateUserResponse {
     	
     }    
       
-    public void setresponses(List<UserResponse> responses) {
+    public void setresponses(List<HTTPResponseCollector> responses) {
     	this.responses = responses;
     }
     
-    public List<UserResponse> getresponses() {
+    public List<HTTPResponseCollector> getresponses() {
     	return responses;
     }
     

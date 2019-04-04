@@ -16,31 +16,33 @@ public class Task {
 	private final AtomicInteger counter;
 	private final DeferredResult<ResponseEntity<AggregateUserResponse>> result;
 	private final List<AtomicRegisterRequest> requests;
-	private final List<UserResponse> responses;
+	private final List<HTTPResponseCollector> userCreationResponse;
 	private long startTime;
 
 	public Task(final DeferredResult<ResponseEntity<AggregateUserResponse>> result, final List<AtomicRegisterRequest> requests) {
 		this.counter = new AtomicInteger(requests.size());
 		this.requests = requests;
 		this.result = result;
-		this.responses = requests.stream().map(s -> new UserResponse()).collect(toList());
+		this.userCreationResponse = requests.stream().map(s -> new HTTPResponseCollector()).collect(toList());
 	}
 	
 	public List<AtomicRegisterRequest> getRequests() {
         return unmodifiableList(requests);
     }
 	
-	public void fail(int index, long time,IOException e) {
-		responses.get(index).sethttpResponseStatus(502);
-        responses.get(index).setbody("Failed: " + e.getMessage());
-        responses.get(index).setduration((int)(System.currentTimeMillis() - time));
+	public void fail(int index, long time, String url, IOException e) {
+		userCreationResponse.get(index).sethttpResponseStatus(502);
+		userCreationResponse.get(index).setbody("Failed: " + e.getMessage());
+        userCreationResponse.get(index).setduration((int)(System.currentTimeMillis() - time));
+        userCreationResponse.get(index).settarget(url);
         checkDone();
 	}
 	
-	public void success(int index, long time, Response response) throws IOException {
-		responses.get(index).sethttpResponseStatus(response.code());
-        responses.get(index).setbody(response.body().string());
-        responses.get(index).setduration((int)(System.currentTimeMillis() - time));
+	public void success(int index, long time, String url, Response response) throws IOException {
+		userCreationResponse.get(index).sethttpResponseStatus(response.code());
+		userCreationResponse.get(index).setbody(response.body().string());
+		userCreationResponse.get(index).setduration((int)(System.currentTimeMillis() - time));
+		userCreationResponse.get(index).settarget(url);
         checkDone();
 	}
 	
@@ -51,7 +53,7 @@ public class Task {
 	private void checkDone() {
 		synchronized (counter) {
 			if(counter.decrementAndGet() == 0) {
-				AggregateUserResponse response = new AggregateUserResponse(responses, (int)(System.currentTimeMillis() - startTime));
+				AggregateUserResponse response = new AggregateUserResponse(userCreationResponse, (int)(System.currentTimeMillis() - startTime));
 				result.setResult(ResponseEntity.ok(response));
 			}
 		}		

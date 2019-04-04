@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.usrmgt.spring.master.domain.AtomicRegisterRequest;
 
-public class RequestContainer {  
+public class RegisterRequestContainer {  
 	private List<AtomicRegisterRequest> requestList = new ArrayList<AtomicRegisterRequest>();
 
 	public List<AtomicRegisterRequest> getRequestList() {

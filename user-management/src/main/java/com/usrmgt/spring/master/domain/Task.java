@@ -30,19 +30,21 @@ public class Task {
         return unmodifiableList(requests);
     }
 	
-	public void fail(int index, long time, String url, IOException e) {
+	public void fail(int index, long time, String url, String access, IOException e) {
 		userCreationResponse.get(index).sethttpResponseStatus(502);
 		userCreationResponse.get(index).setbody("Failed: " + e.getMessage());
         userCreationResponse.get(index).setduration((int)(System.currentTimeMillis() - time));
         userCreationResponse.get(index).settarget(url);
+        userCreationResponse.get(index).setaccess(access);
         checkDone();
 	}
 	
-	public void success(int index, long time, String url, Response response) throws IOException {
+	public void success(int index, long time, String url, String access,  Response response) throws IOException {
 		userCreationResponse.get(index).sethttpResponseStatus(response.code());
 		userCreationResponse.get(index).setbody(response.body().string());
 		userCreationResponse.get(index).setduration((int)(System.currentTimeMillis() - time));
 		userCreationResponse.get(index).settarget(url);
+		userCreationResponse.get(index).setaccess(access);
         checkDone();
 	}
 	

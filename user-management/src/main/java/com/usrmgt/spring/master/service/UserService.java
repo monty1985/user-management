@@ -29,17 +29,15 @@ public class UserService {
             final long time = System.currentTimeMillis();            
             AtomicRegisterRequest atomicReq = task.getRequests().get(i);            
             Request req = ServiceUtils.buildRequestForRegisterUser(atomicReq); 
-            
-//            logger.info("Sending request for the atomicReq userid: ["+ atomicReq.getuserId() +"] Access: [" + atomicReq.getaccess());
             client.newCall(req).enqueue(new Callback() {            
                 @Override
                 public void onFailure(Call request, IOException e) {
-                    task.fail(index, time, req.url().toString(), e);
+                    task.fail(index, time, req.url().toString(), atomicReq.getaccess(),e);
                 }
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    task.success(index, time, req.url().toString(), response);
+                    task.success(index, time, req.url().toString(),  atomicReq.getaccess(), response);
                 }
             });
         }
@@ -53,20 +51,16 @@ public class UserService {
             final long time = System.currentTimeMillis();            
             AtomicDeleteRequest atomicDelReq = delTask.getRequests().get(i);            
             Request req = ServiceUtils.buildRequestForDeleteUser(atomicDelReq);            
-//            logger.info("Sending request for the atomicReq userid: ["+ atomicReq.getuserId() +"] Access: [" + atomicReq.getaccess());
             client.newCall(req).enqueue(new Callback() {            
             	@Override
                 public void onFailure(Call request, IOException e) {
-            		delTask.fail(index, time, req.url().toString(), e);
+            		delTask.fail(index, time, req.url().toString(), atomicDelReq.getaccess(),e);
                 }
-
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                	delTask.success(index, time, req.url().toString(), response);
+                	delTask.success(index, time, req.url().toString(),  atomicDelReq.getaccess(), response);
                 }
             });
         }
-    }	
-    
-    
+    }    
 }

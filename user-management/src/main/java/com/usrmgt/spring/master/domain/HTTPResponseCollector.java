@@ -5,6 +5,7 @@ public class HTTPResponseCollector {
     private int httpResponseStatus;
     private int duration;
     private String target;
+    private String access;
 
 	public void setbody(String body) {
 		this.body = body;
@@ -40,5 +41,13 @@ public class HTTPResponseCollector {
 	public String gettarget() {
 		return target;
 	}
+	
+	public void setaccess(String access) {
+		this.access = access;
+	}
+	
+	public String getaccess() {
+		return access;
+	}	
 	
 }

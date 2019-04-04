@@ -30,19 +30,21 @@ public class DeleteTask {
         return unmodifiableList(requests);
     }
 	
-	public void fail(int index, long time, String url, IOException e) {
+	public void fail(int index, long time, String url, String access,  IOException e) {
 		responses.get(index).sethttpResponseStatus(502);
         responses.get(index).setbody("Failed: " + e.getMessage());
         responses.get(index).setduration((int)(System.currentTimeMillis() - time));
         responses.get(index).settarget(url);
+        responses.get(index).setaccess(access);
         checkDone();
 	}
 	
-	public void success(int index, long time, String url, Response response) throws IOException {
+	public void success(int index, long time, String url, String access, Response response) throws IOException {
 		responses.get(index).sethttpResponseStatus(response.code());
         responses.get(index).setbody(response.body().string());
         responses.get(index).setduration((int)(System.currentTimeMillis() - time));
         responses.get(index).settarget(url);
+        responses.get(index).setaccess(access);
         checkDone();
 	}
 	

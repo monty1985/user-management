@@ -1,5 +1,6 @@
 package com.usrmgt.spring.master.utils;
 
+import java.io.File;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -53,6 +54,15 @@ public class UserUtils {
 	}
 	
 	
-	
+	/**
+	 * Gets the the file path to test resources directory.
+	 * 
+	 * @return The test directory file path.
+	 */
+	public static String getPathToTestResourcesDirectory() {
+		String filepath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" 
+				+ File.separator + "java";
+		return filepath;
+	}
 	
 }

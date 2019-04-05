@@ -13,26 +13,26 @@ import okhttp3.RequestBody;
 
 public class ServiceUtils {
 	
-	private final static Logger LOGGER = Logger.getLogger(ServiceUtils.class.getName());	
+	private final static Logger LOGGER = Logger.getLogger(ServiceUtils.class.getName());
+	private final static String registerTarget = "/user/register";
+	private final static String deleteTarget = "/user/delete";
 		
-	public static Request buildRequestForRegisterUser(AtomicRegisterRequest req){ 
+	public static Request buildRequestForRegisterUser(AtomicRegisterRequest req, Host reqHost){ 
 		
 		MediaType JSON = MediaType.parse("application/json; charset=utf-8");		
 		String accessRights = req.getaccess();
 		LOGGER.info("accessRights: "+ accessRights);
-		ManageHost managerHost = new ManageHost(accessRights);
-		String host = managerHost.getHost();
-		String port = managerHost.getPort();		
-		String appContext = managerHost.getContextPath();
+		String host = reqHost.getHostname();
+		String port = reqHost.getPort();		
+		String appContext = reqHost.getContext();
 		LOGGER.info("Context path for accessRights: [ "+ accessRights+" ] is [ "+appContext);
-		String target = "/user/register";		
-		
+				
 		StringBuilder urlBuilder = new StringBuilder();
 		urlBuilder.append("http://");
 		urlBuilder.append(host);
 		urlBuilder.append(":" + port);
 		urlBuilder.append("/" + appContext);
-		urlBuilder.append(target);		
+		urlBuilder.append(registerTarget);		
 		LOGGER.info("Url: body for the user: "+ req.getuserId()+ " "+urlBuilder.toString());
 		
 		//build request body
@@ -55,25 +55,22 @@ public class ServiceUtils {
 		return request;
 	}
 	
-	public static Request buildRequestForDeleteUser(AtomicDeleteRequest req){	
+	public static Request buildRequestForDeleteUser(AtomicDeleteRequest req, Host reqHost ){	
 		MediaType JSON = MediaType.parse("application/json; charset=utf-8");		
 		String accessRights = req.getaccess();
 		
 		LOGGER.info("accessRights: "+ accessRights);
-		ManageHost managerHost = new ManageHost(accessRights);
-		String host = managerHost.getHost();
-		String port = managerHost.getPort();		
-		String appContext = managerHost.getContextPath();
+		String host = reqHost.getHostname();
+		String port = reqHost.getPort();		
+		String appContext = reqHost.getContext();
 		
-		LOGGER.info("Context path for accessRights: [ "+ accessRights+" ] is [ "+appContext);
-		String target = "/user/delete";		
-		
+		LOGGER.info("Context path for accessRights: [ "+ accessRights+" ] is [ "+appContext);		
 		StringBuilder urlBuilder = new StringBuilder();
 		urlBuilder.append("http://");
 		urlBuilder.append(host);
 		urlBuilder.append(":" + port);
 		urlBuilder.append("/" + appContext);
-		urlBuilder.append(target);
+		urlBuilder.append(deleteTarget);
 		
 		LOGGER.info("del Url for the user: "+ req.getuserId()+ " "+urlBuilder.toString());		
 		//build request body

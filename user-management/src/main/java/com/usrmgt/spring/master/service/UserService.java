@@ -1,6 +1,8 @@
 package com.usrmgt.spring.master.service;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -8,6 +10,8 @@ import com.usrmgt.spring.master.domain.AtomicDeleteRequest;
 import com.usrmgt.spring.master.domain.AtomicRegisterRequest;
 import com.usrmgt.spring.master.domain.DeleteTask;
 import com.usrmgt.spring.master.domain.Task;
+import com.usrmgt.spring.master.utils.Host;
+import com.usrmgt.spring.master.utils.ManageHostImpl;
 import com.usrmgt.spring.master.utils.ServiceUtils;
 
 import okhttp3.Call;
@@ -22,13 +26,16 @@ public class UserService {
 	   
    private OkHttpClient client = new OkHttpClient();
 
-    public void executeRegister(final Task task) {        
+    public void executeRegister(final Task task) { 
+    	
+    	final Map<String,List<Host>> hostMap = ManageHostImpl.gethostAccessMap();
         task.start();
         for(int i = 0; i < task.getRequests().size(); i++) {
             final int index = i;
             final long time = System.currentTimeMillis();            
             AtomicRegisterRequest atomicReq = task.getRequests().get(i);            
-            Request req = ServiceUtils.buildRequestForRegisterUser(atomicReq); 
+            Host reqHost = hostMap.get(atomicReq.getaccess()).get(0);            
+            Request req = ServiceUtils.buildRequestForRegisterUser(atomicReq, reqHost); 
             client.newCall(req).enqueue(new Callback() {            
                 @Override
                 public void onFailure(Call request, IOException e) {
@@ -44,13 +51,15 @@ public class UserService {
     }	
     
     
-    public void executeDelete(final DeleteTask delTask) {        
+    public void executeDelete(final DeleteTask delTask) { 
+    	final Map<String,List<Host>> hostMap = ManageHostImpl.gethostAccessMap();
     	delTask.start();
         for(int i = 0; i < delTask.getRequests().size(); i++) {
             final int index = i;
             final long time = System.currentTimeMillis();            
-            AtomicDeleteRequest atomicDelReq = delTask.getRequests().get(i);            
-            Request req = ServiceUtils.buildRequestForDeleteUser(atomicDelReq);            
+            AtomicDeleteRequest atomicDelReq = delTask.getRequests().get(i); 
+            Host reqHost = hostMap.get(atomicDelReq.getaccess()).get(0);
+            Request req = ServiceUtils.buildRequestForDeleteUser(atomicDelReq,reqHost);            
             client.newCall(req).enqueue(new Callback() {            
             	@Override
                 public void onFailure(Call request, IOException e) {

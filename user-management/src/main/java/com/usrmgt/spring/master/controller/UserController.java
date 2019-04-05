@@ -23,6 +23,7 @@ import com.usrmgt.spring.master.domain.UserDeleteRequests;
 import com.usrmgt.spring.master.domain.UserRequests;
 import com.usrmgt.spring.master.domain.UserResponse;
 import com.usrmgt.spring.master.service.UserService;
+import com.usrmgt.spring.master.utils.ManageHostImpl;
 import com.usrmgt.spring.master.utils.UserUtils;
 
 @RestController
@@ -37,6 +38,9 @@ public class UserController {
 		
 	@Autowired
 	UserDAO userDao;
+	
+	
+		
 
 	@RequestMapping(value = "/register/users", method = RequestMethod.POST,consumes="application/json", produces = "application/json" )	
 	public DeferredResult<ResponseEntity<AggregateUserResponse>> registerUsers(@RequestBody UserRequests regRequests) {
@@ -50,6 +54,7 @@ public class UserController {
 	@RequestMapping(value = "/delete/users", method = RequestMethod.DELETE,consumes="application/json", produces = "application/json" )	
 	public DeferredResult<ResponseEntity<AggregateUserResponse>> deleteUsers(@RequestBody UserDeleteRequests delRequest) {
 		DeferredResult<ResponseEntity<AggregateUserResponse>> delUserResult = new DeferredResult<>();
+		new ManageHostImpl();
 		List<AtomicDeleteRequest> delRequestList = UserUtils.getDeSerializedUserDeleteRequest(delRequest);
 		DeleteTask deltask = new DeleteTask(delUserResult, delRequestList);	
 		service.executeDelete(deltask);
@@ -67,5 +72,6 @@ public class UserController {
 		UserResponse response = userDao.deleteUser(deleteReq);
 		return response;
 	}
-
+	
+	
 }

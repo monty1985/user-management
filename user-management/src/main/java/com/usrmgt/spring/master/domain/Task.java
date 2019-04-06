@@ -10,6 +10,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.async.DeferredResult;
 
+import com.usrmgt.spring.node.dto.AtomicRegisterRequest;
+
 import okhttp3.Response;
 
 public class Task {

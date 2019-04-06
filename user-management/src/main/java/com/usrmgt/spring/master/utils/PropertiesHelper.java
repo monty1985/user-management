@@ -14,14 +14,14 @@ import com.usrmgt.spring.master.exceptions.PropertyNotFound;
 
 public class PropertiesHelper {
 
-	private final static Logger LOGGER = Logger.getLogger(PropertiesHelper.class.getName());	
+	private static final Logger LOGGER = Logger.getLogger(PropertiesHelper.class.getName());	
     
 	/**
 	 * This class stores Host properties.
 	 */
 	@SuppressWarnings("serial")
 	public static class HostProperties extends Properties{
-		private final Logger LOGGER = Logger.getLogger(PropertiesHelper.class.getName());	
+		private static final Logger LOGGER = Logger.getLogger(PropertiesHelper.class.getName());	
 
 		/**
 		 * Gets the required property. If no property is found this method will throw an exception.
@@ -32,10 +32,10 @@ public class PropertiesHelper {
 		 * @throws PropertyNotFound In case we do not find the property.
 		 */
 		public String getRequiredProperty(String property) throws PropertyNotFound{
-			LOGGER.info("Looking up required property = [" + property + "] in runtime.properties");
+			LOGGER.info("Looking up required property = [" + property + "] in ManageHost.properties");
 			String value = super.getProperty(property);
 			if( value == null){
-				throw new PropertyNotFound("There is no property = [" + property + "] defined in the runtime.properties file.");
+				throw new PropertyNotFound("There is no property = [" + property + "] defined in the ManageHost.properties file.");
 			}
 			return value;
 		}
@@ -107,6 +107,7 @@ public class PropertiesHelper {
 	 * @return A list of Host numbers
 	 */
 	public static List<String> getHostsFromProperties(HostProperties properties){
+		LOGGER.info("\n------- getHostsFromProperties -----------");
 		ArrayList<String> nodeNames = new ArrayList <String>();
 		for(Entry<Object, Object> e : properties.entrySet()) {
 			String keyName = e.getKey().toString();
@@ -146,6 +147,7 @@ public class PropertiesHelper {
 	public static List<String> getHostFromPropertiesByPurpose(HostProperties properties, String purpose){
 		List<String> listHost = new ArrayList<String>();
 		List<String> hostNames = getHostsFromProperties(properties);
+		LOGGER.info("hostNames List " + hostNames);
 		for(String hostName : hostNames)
 		{
 			String[] purposeValues = properties.getProperty(hostName + ".purpose").split(",");
@@ -159,10 +161,13 @@ public class PropertiesHelper {
 	
 	public static List<String> getAccessList(HostProperties properties) {
 		List<String> listAccess = new ArrayList<String>();
-		List<String> hostNames = getHostsFromProperties(properties);
+		List<String> hostNames = getHostsFromProperties(properties);		
+		LOGGER.info("hostNames List " + hostNames);
 		for(String hostName : hostNames)
-		{
-			String[] accessValues = properties.getProperty(hostName + ".access").split(",");
+		{				
+			String accesses = properties.getProperty(hostName.trim() + ".access");
+			LOGGER.info(" Getting the Access property for "+ accesses);
+			String[] accessValues = accesses.split(",");
 			for (String accessVal : accessValues) {
 				listAccess.add(accessVal.trim());
 			}			

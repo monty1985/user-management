@@ -1,18 +1,19 @@
 package com.usrmgt.spring.master.service;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.springframework.stereotype.Service;
 
-import com.usrmgt.spring.master.domain.AtomicDeleteRequest;
-import com.usrmgt.spring.master.domain.AtomicRegisterRequest;
 import com.usrmgt.spring.master.domain.DeleteTask;
+import com.usrmgt.spring.master.domain.Host;
 import com.usrmgt.spring.master.domain.Task;
-import com.usrmgt.spring.master.utils.Host;
-import com.usrmgt.spring.master.utils.ManageHostImpl;
 import com.usrmgt.spring.master.utils.ServiceUtils;
+import com.usrmgt.spring.node.dto.AtomicDeleteRequest;
+import com.usrmgt.spring.node.dto.AtomicRegisterRequest;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -22,13 +23,18 @@ import okhttp3.Response;
 
 
 @Service
-public class UserService {
-	   
-   private OkHttpClient client = new OkHttpClient();
-
-    public void executeRegister(final Task task) { 
-    	
-    	final Map<String,List<Host>> hostMap = ManageHostImpl.gethostAccessMap();
+public class UserService {	   
+  
+   private  final Logger LOGGER = Logger.getLogger(UserService.class.getName());   
+   
+    public void executeRegister(final Task task) throws FileNotFoundException, Exception {     	
+        OkHttpClient client = new OkHttpClient();
+    	ManageHostImpl host = new  ManageHostImpl();
+    	Map<String,List<Host>> hostMap =  host.generateHostAccessMap();
+    	if(hostMap == null) {  
+    		LOGGER.info(" The Manager Host failed to load the available Node");
+    		throw new RuntimeException(" The Manager Host failed to load the available Nodes.");
+    	}    	
         task.start();
         for(int i = 0; i < task.getRequests().size(); i++) {
             final int index = i;
@@ -51,8 +57,14 @@ public class UserService {
     }	
     
     
-    public void executeDelete(final DeleteTask delTask) { 
-    	final Map<String,List<Host>> hostMap = ManageHostImpl.gethostAccessMap();
+    public void executeDelete(final DeleteTask delTask) throws FileNotFoundException, Exception { 
+    	 OkHttpClient client = new OkHttpClient();
+    	ManageHostImpl host = new  ManageHostImpl();
+    	Map<String,List<Host>> hostMap =  host.generateHostAccessMap();
+    	if(hostMap == null) {  
+    		LOGGER.info(" The Manager Host failed to load the available Node");
+    		throw new RuntimeException(" The Manager Host failed to load the available Nodes.");
+    	}  
     	delTask.start();
         for(int i = 0; i < delTask.getRequests().size(); i++) {
             final int index = i;

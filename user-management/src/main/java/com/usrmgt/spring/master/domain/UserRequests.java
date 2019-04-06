@@ -4,13 +4,13 @@ import java.util.List;
 
 public class UserRequests {
 	
-	private List<User> users;
+	private List<UserRegister> users;
 	
-	public List<User> getUsers(){
+	public List<UserRegister> getUsers(){
 		return users;
 	}
 	
-	public void setUsers(List<User> users) {
+	public void setUsers(List<UserRegister> users) {
 		this.users = users;
 	}
 	

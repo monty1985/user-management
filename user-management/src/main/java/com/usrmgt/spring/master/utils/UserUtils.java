@@ -4,12 +4,14 @@ import java.io.File;
 import java.util.List;
 import java.util.logging.Logger;
 
-import com.usrmgt.spring.master.domain.AtomicDeleteRequest;
-import com.usrmgt.spring.master.domain.AtomicRegisterRequest;
-import com.usrmgt.spring.master.domain.User;
+import com.usrmgt.spring.master.domain.UserRegister;
+import com.usrmgt.spring.master.domain.DeleteRequestContainer;
+import com.usrmgt.spring.master.domain.RegisterRequestContainer;
 import com.usrmgt.spring.master.domain.UserDelete;
 import com.usrmgt.spring.master.domain.UserDeleteRequests;
 import com.usrmgt.spring.master.domain.UserRequests;
+import com.usrmgt.spring.node.dto.AtomicDeleteRequest;
+import com.usrmgt.spring.node.dto.AtomicRegisterRequest;
 
 
 public class UserUtils {
@@ -18,7 +20,7 @@ public class UserUtils {
 	
 	public static List<AtomicRegisterRequest> getDeSerializedUserRegisterRequest(UserRequests request){		
 		List<AtomicRegisterRequest> requestList =  new RegisterRequestContainer().getRequestList();
-		for (User user : request.getUsers()) {
+		for (UserRegister user : request.getUsers()) {
 			LOGGER.info("User info :" + user);		
 			String[] access = user.getaccess(); 			
 			for(String ac : access) {
@@ -60,8 +62,11 @@ public class UserUtils {
 	 * @return The test directory file path.
 	 */
 	public static String getPathToTestResourcesDirectory() {
-		String filepath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" 
-				+ File.separator + "java";
+		String filepath = System.getProperty("user.dir") +  File.separator +"webapps"+ File.separator +"user-management" 
+	     + File.separator + "WEB-INF" + File.separator+ "classes";
+//				+  File.separator +"com"+  File.separator +"usrmgt"+ File.separator +"spring"+  File.separator +"master"+  File.separator +"resources";
+		
+		 LOGGER.info("File path: "+ filepath); 
 		return filepath;
 	}
 	

@@ -4,8 +4,9 @@ import java.util.logging.Logger;
 
 import org.json.JSONObject;
 
-import com.usrmgt.spring.master.domain.AtomicDeleteRequest;
-import com.usrmgt.spring.master.domain.AtomicRegisterRequest;
+import com.usrmgt.spring.master.domain.Host;
+import com.usrmgt.spring.node.dto.AtomicDeleteRequest;
+import com.usrmgt.spring.node.dto.AtomicRegisterRequest;
 
 import okhttp3.MediaType;
 import okhttp3.Request;

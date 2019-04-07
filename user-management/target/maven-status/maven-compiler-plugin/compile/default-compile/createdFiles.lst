@@ -20,6 +20,7 @@ com\usrmgt\spring\master\domain\Host.class
 com\usrmgt\spring\master\domain\Task.class
 com\usrmgt\spring\node\dto\AtomicRegisterRequest.class
 com\usrmgt\spring\master\domain\HTTPResponseCollector.class
+com\usrmgt\spring\master\utils\UserRegisterValidator.class
 com\usrmgt\spring\master\domain\UserRequests.class
 com\usrmgt\spring\master\utils\PropertiesHelper$HostProperties.class
 com\usrmgt\spring\master\service\ManageHost.class

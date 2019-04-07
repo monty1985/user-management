@@ -2,9 +2,15 @@ package com.usrmgt.spring.master.domain;
 
 public class UserRegister {
 
-	private String firstName;    
+	private String firstName;
+	
+
 	private String lastName;
+	
+
 	private String userId;
+	
+	
 	private String email;	
 	private String[] access;
 

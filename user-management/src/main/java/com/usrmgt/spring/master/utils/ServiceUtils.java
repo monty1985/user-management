@@ -14,6 +14,10 @@ import okhttp3.RequestBody;
 
 public class ServiceUtils {
 	
+	/*	 
+	 * This Utility class provides various functionalities build okhttp request got register and delete User. 
+	 */
+	
 	private final static Logger LOGGER = Logger.getLogger(ServiceUtils.class.getName());
 	private final static String registerTarget = "/user/register";
 	private final static String deleteTarget = "/user/delete";

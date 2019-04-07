@@ -14,7 +14,11 @@ import com.usrmgt.spring.node.dto.AtomicRegisterRequest;
 
 import okhttp3.Response;
 
-public class Task {
+public class Task {		
+	/*	 
+	 * This class provides functionality to manage threads for asynchronous request responses.
+	 */
+	
 	private final AtomicInteger counter;
 	private final DeferredResult<ResponseEntity<AggregateUserResponse>> result;
 	private final List<AtomicRegisterRequest> requests;

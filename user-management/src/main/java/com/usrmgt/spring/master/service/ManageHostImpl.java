@@ -14,6 +14,13 @@ import com.usrmgt.spring.master.utils.PropertiesHelper.HostProperties;
 
 public class ManageHostImpl {
 	
+	/*	 
+	 * This class provides various functionalities to manager host. 
+	 * Provides the list of available nodes by purpose (User register / Delete)
+	 * Provides the list of available nodes by access ( R1, R2, R3, R4, R5, R6)
+	 * get the MAP for available hosts for the a given rights / access
+	 */
+	
 	private static final Logger LOGGER = Logger.getLogger(ManageHostImpl.class.getName());
     	
 	private HostProperties properties;
@@ -45,8 +52,7 @@ public class ManageHostImpl {
 			   hostList.add(new Host(hostname,port,context));
 		   }
 		return hostList;
-	}
-	
+	}	
 	
 	public  Map<String,List<Host>> generateHostAccessMap() throws FileNotFoundException, Exception{			
 		PropertiesHelper.printProperties(properties);

@@ -14,6 +14,7 @@ C:\Users\karthmoh.CORPDOM\git\repository\user-management\src\main\java\com\usrmg
 C:\Users\karthmoh.CORPDOM\git\repository\user-management\src\main\java\com\usrmgt\spring\master\service\ManageHostImpl.java
 C:\Users\karthmoh.CORPDOM\git\repository\user-management\src\main\java\com\usrmgt\spring\node\dto\AtomicRegisterRequest.java
 C:\Users\karthmoh.CORPDOM\git\repository\user-management\src\main\java\com\usrmgt\spring\master\domain\RegisterRequestContainer.java
+C:\Users\karthmoh.CORPDOM\git\repository\user-management\src\main\java\com\usrmgt\spring\master\utils\UserRegisterValidator.java
 C:\Users\karthmoh.CORPDOM\git\repository\user-management\src\main\java\com\usrmgt\spring\master\utils\CONSTANTS.java
 C:\Users\karthmoh.CORPDOM\git\repository\user-management\src\main\java\com\usrmgt\spring\master\domain\Task.java
 C:\Users\karthmoh.CORPDOM\git\repository\user-management\src\main\java\com\usrmgt\spring\master\domain\UserDelete.java

@@ -27,7 +27,7 @@ public class UserService {
   
    private  final Logger LOGGER = Logger.getLogger(UserService.class.getName());   
    
-    public void executeRegister(final Task task) throws FileNotFoundException, Exception {     	
+    public void executeRegister(final Task task)  throws FileNotFoundException, Exception {     	
         OkHttpClient client = new OkHttpClient();
     	ManageHostImpl host = new  ManageHostImpl();
     	Map<String,List<Host>> hostMap =  host.generateHostAccessMap();

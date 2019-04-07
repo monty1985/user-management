@@ -18,12 +18,20 @@ public class UserUtils {
     
 	private static final Logger LOGGER = Logger.getLogger(UserUtils.class.getName());
 	
+	/**
+	 * This static method helps to deserialize the incoming JSON OBJECT to a simple user register request.
+	 * 
+	 * @return The List of Atomic Register request.
+	 */
+	
 	public static List<AtomicRegisterRequest> getDeSerializedUserRegisterRequest(UserRequests request){		
 		List<AtomicRegisterRequest> requestList =  new RegisterRequestContainer().getRequestList();
 		for (UserRegister user : request.getUsers()) {
-			LOGGER.info("User info :" + user);		
+			LOGGER.info("User info :" + user);
+			if(user==null) throw new RuntimeException("User info parsing exeception exception");
 			String[] access = user.getaccess(); 			
 			for(String ac : access) {
+				if(user==null) throw new RuntimeException("User info access parsing exeception exception");
 				 LOGGER.info("Access for the User : ["+user.getuserId() + "] "+ ac);
 				AtomicRegisterRequest req = new AtomicRegisterRequest();				
 			    req.setfirstName(user.getfirstName());
@@ -36,14 +44,22 @@ public class UserUtils {
 			}			
 		}
 		return requestList;
-	}	
+	}
+	
+	/**
+	 * This static method helps to deserialize the incoming JSON OBJECT to a simple user delete request.
+	 * 
+	 * @return The List of Atomic Register request.
+	 */
 	
 	public static List<AtomicDeleteRequest> getDeSerializedUserDeleteRequest(UserDeleteRequests delrequests){		
 		List<AtomicDeleteRequest> delRequestList =  new DeleteRequestContainer().getRequestList();
 		for (UserDelete user : delrequests.getUsers()) {
-			LOGGER.info("delete user info :" + user);		
+			LOGGER.info("delete user info :" + user);	
+			if(user==null) throw new RuntimeException("User info parsing exeception exception");
 			String[] access = user.getaccess(); 			
 			for(String ac : access) {
+				if(user==null) throw new RuntimeException("User info access parsing exeception exception");
 				 LOGGER.info("Access for the User : ["+user.getuserId() + "] "+ ac);
 				AtomicDeleteRequest req = new AtomicDeleteRequest();			
 			    req.setuserId(user.getuserId());			   

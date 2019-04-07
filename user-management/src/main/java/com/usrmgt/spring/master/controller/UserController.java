@@ -1,8 +1,8 @@
 package com.usrmgt.spring.master.controller;
 
-import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.naming.NamingException;
 
@@ -30,34 +30,48 @@ import com.usrmgt.spring.node.dto.UserResponse;
 public class UserController {
 
 	private final UserService service;
-	
+	private static final Logger LOGGER = Logger.getLogger(UserController.class.getName());
+
 	@Autowired
 	public UserController(final UserService service ) {
 		this.service = service;
 	}
-		
+
 	@Autowired
 	UserDAO userDao;
-	
 
 	@RequestMapping(value = "/register/users", method = RequestMethod.POST,consumes="application/json", produces = "application/json" )	
-	public DeferredResult<ResponseEntity<AggregateUserResponse>> registerUsers(@RequestBody UserRequests regRequests) throws FileNotFoundException, Exception {
+	public DeferredResult<ResponseEntity<AggregateUserResponse>> registerUsers(@RequestBody UserRequests regRequests) {
 		DeferredResult<ResponseEntity<AggregateUserResponse>> result = new DeferredResult<>();
+		UserResponse response = new UserResponse();		
+		try {
 		List<AtomicRegisterRequest> requestList = UserUtils.getDeSerializedUserRegisterRequest(regRequests);
-		Task task = new Task(result, requestList);	
+		Task task = new Task(result, requestList);		
 		service.executeRegister(task);
-		return result;		
+		} catch (Exception e) {
+			LOGGER.info(e.toString());
+			response.setstatus("FAILED: Exception could not process the input");
+			result.setErrorResult(response);
+		}
+	    return result;	
 	}
-	
+
 	@RequestMapping(value = "/delete/users", method = RequestMethod.DELETE,consumes="application/json", produces = "application/json" )	
-	public DeferredResult<ResponseEntity<AggregateUserResponse>> deleteUsers(@RequestBody UserDeleteRequests delRequest) throws FileNotFoundException, Exception {
-		DeferredResult<ResponseEntity<AggregateUserResponse>> delUserResult = new DeferredResult<>();		
+	public DeferredResult<ResponseEntity<AggregateUserResponse>> deleteUsers(@RequestBody UserDeleteRequests delRequest) {
+		DeferredResult<ResponseEntity<AggregateUserResponse>> delUserResult = new DeferredResult<>();	
+		UserResponse delResponse = new UserResponse();		
+		try {
 		List<AtomicDeleteRequest> delRequestList = UserUtils.getDeSerializedUserDeleteRequest(delRequest);
 		DeleteTask deltask = new DeleteTask(delUserResult, delRequestList);	
 		service.executeDelete(deltask);
+		} catch (Exception e) {
+			LOGGER.info(e.toString());
+			delResponse.setstatus("FAILED: Fatal Exception could not process the input request to delete user");
+			delUserResult.setErrorResult(delResponse);
+		}
 		return delUserResult;		
 	}
-	
+
 	@RequestMapping(value = "/user/register", method = RequestMethod.POST,consumes="application/json", produces = "application/json" )	
 	public UserResponse registerUser(@RequestBody AtomicRegisterRequest registerReq) throws NamingException, SQLException {
 		UserResponse response = userDao.registerUser(registerReq);
@@ -69,6 +83,4 @@ public class UserController {
 		UserResponse response = userDao.deleteUser(deleteReq);
 		return response;
 	}
-	
-	
 }
